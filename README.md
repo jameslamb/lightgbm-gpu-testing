@@ -24,5 +24,5 @@ ARM
 ```shell
 ssh \
     -i "${HOME}/.aws/gpu-testing.cer" \
-    ubuntu@ec2-52-43-171-110.us-west-2.compute.amazonaws.com
+    ubuntu@ec2-35-91-68-40.us-west-2.compute.amazonaws.com
 ```
