@@ -47,28 +47,8 @@ sudo apt-get install -y \
     nvidia-driver-515 \
     nvidia-utils-515
 
-# reboot the machine
-sudo reboot
-
-# back in, in a new session, check that drivers were set up correctly
-nvidia-smi
-
-# install nvidia-docker
-sudo apt-get update -y
-sudo systemctl stop docker
-sudo apt-get install -y \
-    nvidia-docker2
-sudo systemctl restart docker
-
-# check that nvidia-docker was set up correctly,
-# and works for the base image relevant to this PR
-sudo docker run \
-    --rm \
-    --gpus all \
-    nvidia/cuda:8.0-cudnn5-devel \
-    nvidia-smi
-
 # install conda
+echo "installing conda..."
 ARCH=$(uname -m)
 sudo curl \
     -L \
@@ -79,7 +59,7 @@ sudo sh miniforge.sh -b -p /opt/miniforge
 export PATH="/opt/miniforge/bin:${PATH}"
 
 conda create \
-    --name lgb-wheel-test \
+    --name lgb-gpu \
     -c conda-forge \
     --yes \
         python=3.9 \
@@ -87,27 +67,14 @@ conda create \
         scikit-learn \
         wheel
 
+echo "done installing conda"
 
-# build lightgbm wheel
-source activate lgb-wheel-test
-sudo mkdir /usr/local/src/LightGBM
+echo "cloning LightGBM"
 sudo git clone \
     --recursive \
-    https://github.com/jgiannuzzi/LightGBM.git \
-    --branch linux-gpu-wheel \
+    https://github.com/microsoft/LightGBM.git \
     /usr/local/src/LightGBM
+echo "done cloning LightGBM"
 
-cd /usr/local/src/LightGBM/python-package
-
-
-python setup.py bdist_wheel \
-    --integrated-opencl \
-    --plat-name=manylinux2014_aarch64 \
-    --python-tag py3
-
-
-BUILD_ID=13868
-sudo wget \
-    -O artifacts.zip \
-    "https://dev.azure.com/lightgbm-ci/lightgbm-ci/_apis/build/builds/${BUILD_ID}/artifacts?artifactName=PackageAssets&api-version=7.1-preview.5&%24format=zip"
-
+# reboot the machine
+# sudo reboot
