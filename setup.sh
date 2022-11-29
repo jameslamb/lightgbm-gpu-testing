@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e -u -o pipefail
+
 # following https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html
 
 # install docker

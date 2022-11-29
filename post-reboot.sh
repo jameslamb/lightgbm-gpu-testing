@@ -1,3 +1,7 @@
+#!/bin/bash
+
+set -e -u -o pipefail
+
 # back in, in a new session, check that drivers were set up correctly
 nvidia-smi
 
