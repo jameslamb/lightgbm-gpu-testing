@@ -1,5 +1,10 @@
 # lightgbm-gpu-testing
 
+
+
+
+## Create an EC2
+
 I got a GPU-enabled EC2 instance on AWS with the following specifications.
 
 - **AMI**: Ubuntu 18.04 (ami-0b152cfd354c4c7a4)
@@ -25,4 +30,13 @@ ARM
 ssh \
     -i "${HOME}/.aws/gpu-testing.cer" \
     ubuntu@ec2-35-91-68-40.us-west-2.compute.amazonaws.com
+```
+
+## Get this repo
+
+```shell
+sudo git clone \
+    --depth 1 \
+    https://github.com/jameslamb/lightgbm-gpu-testing.git \
+    /usr/local/src/lightgbm-gpu-testing
 ```
