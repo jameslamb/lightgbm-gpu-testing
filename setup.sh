@@ -80,5 +80,7 @@ sudo git clone \
     /usr/local/src/LightGBM
 echo "done cloning LightGBM"
 
+sudo usermod -aG docker $USER
+
 # reboot the machine
 # sudo reboot
